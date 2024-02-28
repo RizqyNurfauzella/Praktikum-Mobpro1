@@ -7,6 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -72,22 +73,32 @@ fun Counter() {
     var number by remember { mutableIntStateOf(0) }
 
     MainScreen {modifier ->
-        Column(
-            modifier = modifier.fillMaxSize().padding(16.dp),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+        Row(
+            modifier = modifier.fillMaxSize().padding(15.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
         ) {
+            Button(
+                onClick = { if (number!=0) number-- },
+                modifier = Modifier.fillMaxWidth(0.4f).padding(35.dp),
+                contentPadding = PaddingValues(15.dp),
+            ) {
+                Text(
+                    text = stringResource(id = R.string.kurang),
+                    style = MaterialTheme.typography.displaySmall
+                ) }
             Text(
                 text = number.toString(),
                 style = MaterialTheme.typography.displayLarge
             )
             Button(
                 onClick = { number++},
-                modifier = Modifier.fillMaxWidth(0.5f).padding(16.dp),
-                contentPadding = PaddingValues(16.dp)
+                modifier = Modifier.fillMaxWidth(0.8f).padding(35.dp),
+                contentPadding = PaddingValues(15.dp)
             ) {
-                Text(text = stringResource(id = R.string.count))
-            }
+                Text(text = stringResource(id = R.string.tambah),
+                    style = MaterialTheme.typography.displaySmall
+                ) }
         }
     }
 }
