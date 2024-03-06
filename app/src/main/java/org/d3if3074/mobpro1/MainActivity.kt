@@ -4,8 +4,12 @@ import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -14,9 +18,13 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import org.d3if3074.mobpro1.model.Hewan
 import org.d3if3074.mobpro1.ui.theme.Mobpro1Theme
 
@@ -32,7 +40,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting("Android")
+                    GaleriHewan(hewan = data[0])
                 }
             }
         }
@@ -69,14 +77,28 @@ fun MainScreen(content: @Composable (Modifier) -> Unit) {
     }
 }
 
-
 @Composable
-fun Greeting(name: String) {
+fun GaleriHewan(hewan: Hewan) {
     MainScreen {modifier ->
-        Text(
-            text = "Hello $name!",
+        Column(
             modifier = modifier
-        )
+                .fillMaxSize()
+                .padding(16.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Image(
+                painter = painterResource(id = hewan.imageResId),
+                contentDescription = stringResource(R.string.gambar, hewan.nama),
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.size(132.dp)
+            )
+            Text(
+                text = hewan.nama,
+                style = MaterialTheme.typography.headlineLarge,
+                modifier = Modifier.padding(top = 16.dp)
+            )
+        }
     }
 }
 
@@ -85,6 +107,6 @@ fun Greeting(name: String) {
 @Composable
 fun GreetingPreview() {
     Mobpro1Theme {
-        Greeting("Android")
+        GaleriHewan(hewan = Hewan("Ayam", R.drawable.ayam))
     }
 }
