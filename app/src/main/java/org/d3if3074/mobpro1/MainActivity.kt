@@ -31,7 +31,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import org.d3if3074.mobpro1.model.Hewan
+import org.d3if3074.mobpro1.model.Lampu
 import org.d3if3074.mobpro1.ui.theme.Mobpro1Theme
 
 class MainActivity : ComponentActivity() {
@@ -47,7 +47,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    GaleriHewan(hewan = data[index]) {
+                    KondisiLampu(lampu = data[index]) {
                         index = if (index == data.size-1) 0 else index+1
                     }
                 }
@@ -55,13 +55,10 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    private fun getData(): List<Hewan> {
+    private fun getData(): List<Lampu> {
         return listOf(
-            Hewan("Ayam", R.drawable.ayam),
-            Hewan("Bebek", R.drawable.bebek),
-            Hewan("Domba", R.drawable.domba),
-            Hewan("Kambing", R.drawable.kambing),
-            Hewan("Sapi", R.drawable.sapi),
+            Lampu("Lampu Mati","Hidupkan", R.drawable.lampuoff),
+            Lampu("Lampu Nyala", "Matikan",R.drawable.lampuon),
         )
     }
 }
@@ -87,7 +84,7 @@ fun MainScreen(content: @Composable (Modifier) -> Unit) {
 }
 
 @Composable
-fun GaleriHewan(hewan: Hewan, onClick: () -> Unit = {}) {
+fun KondisiLampu(lampu: Lampu, onClick: () -> Unit = {}) {
     MainScreen {modifier ->
         Column(
             modifier = modifier.fillMaxSize().padding(16.dp),
@@ -95,13 +92,13 @@ fun GaleriHewan(hewan: Hewan, onClick: () -> Unit = {}) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Image(
-                painter = painterResource(id = hewan.imageResId),
-                contentDescription = stringResource(R.string.gambar, hewan.nama),
+                painter = painterResource(id = lampu.imageResId),
+                contentDescription = stringResource(R.string.gambar, lampu.nama),
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.size(132.dp)
             )
             Text(
-                text = hewan.nama,
+                text = lampu.nama,
                 style = MaterialTheme.typography.headlineLarge,
                 modifier = Modifier.padding(top = 16.dp)
             )
@@ -110,7 +107,7 @@ fun GaleriHewan(hewan: Hewan, onClick: () -> Unit = {}) {
                 modifier = Modifier.fillMaxWidth(0.5f).padding(top = 24.dp),
                 contentPadding = PaddingValues(16.dp)
             ) {
-                Text(text = stringResource(id = R.string.lanjut))
+                Text(text = stringResource(id = R.string.lampumati, lampu.status))
             }
         }
     }
@@ -121,6 +118,6 @@ fun GaleriHewan(hewan: Hewan, onClick: () -> Unit = {}) {
 @Composable
 fun GreetingPreview() {
     Mobpro1Theme {
-        GaleriHewan(hewan = Hewan("Ayam", R.drawable.ayam))
+        KondisiLampu(lampu = Lampu("Lampu Mati","Hidupkan" , R.drawable.lampuoff))
     }
 }
