@@ -10,4 +10,15 @@
     <string name="luas_x">Luas: %1$.2f</string>
     <string name="keliling_x">Keliling: %1$.2f</string>
     <string name="input_invalid">Tidak boleh kosong.</string>
+    <string name="tentang_aplikasi">Tentang Aplikasi.</string>
+    <string name="copyright">Hitung bangun datar merupakan sebuah aplikasi Android untuk
+        menghitung Luas Persegi panjang dan Keliling persegi panjang, sehingga seseorang dapat mengetahui
+        hasil dari penghitungan luas dan keliling persegi panjang.\n\nAplikasi ini dibuat untuk kelas
+        Mobpro1.\n\nCopyright © 2024 Rizqy Nurfauzella.\nAll right reserved.</string>
+    <string name="kembali">Kembali</string>
+    <string name="bagikan">Bagikan</string>
+    <string name="bagikan_template">Panjang: %1$s cm\n
+        Lebar: %2$s cm\n\n
+        Luas: %3$.2f\n
+        Keliling: %4$.2f</string>
 </resources>
