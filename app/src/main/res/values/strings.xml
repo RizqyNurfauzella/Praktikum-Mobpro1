@@ -17,4 +17,10 @@
         badannya ideal, gemuk, atau kurus.\n\nAplikasi ini dibuat untuk kelas Mobpro1.\n\n
         Copyright © 2024 Rizqy Nurfauzella\nAll rights reserved.</string>
     <string name="kembali">Kembali</string>
+    <string name="bagikan">Bagikan</string>
+    <string name="bagikan_template">Berat badan: %1$s kg \n
+        Tinggi badan: %2$s cm\n
+        Jenis kelamin: %3$s\n\n
+        BMI: %4$.2f\n
+        %5$s</string>
 </resources>
