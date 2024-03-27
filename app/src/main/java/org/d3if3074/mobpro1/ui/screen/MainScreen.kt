@@ -33,7 +33,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import org.d3if3074.mobpro1.R
-import org.d3if3074.mobpro1.model.Catatan
+import org.d3if3074.mobpro1.model.Mahasiswa
 import org.d3if3074.mobpro1.ui.theme.Mobpro1Theme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -72,7 +72,7 @@ fun MainScreen() {
 @Composable
 fun ScreenContent(modifier: Modifier) {
     val viewModel: MainViewModel = viewModel()
-    val data = viewModel.data
+    val data = viewModel.dataMahasiswa
     val context = LocalContext.current
 
     if (data.isEmpty()) {
@@ -92,8 +92,8 @@ fun ScreenContent(modifier: Modifier) {
             contentPadding = PaddingValues(bottom = 84.dp)
         ) {
             items(data) {
-                ListItem(catatan = it) {
-                    val pesan = context.getString(R.string.x_diklik, it.judul)
+                ListItem(mahasiswa = it) {
+                    val pesan = context.getString(R.string.x_diklik, it.nama)
                     Toast.makeText(context, pesan, Toast.LENGTH_SHORT).show()
                 }
                 Divider()
@@ -103,7 +103,7 @@ fun ScreenContent(modifier: Modifier) {
 }
 
 @Composable
-fun ListItem(catatan: Catatan, onClick: () -> Unit ) {
+fun ListItem(mahasiswa: Mahasiswa, onClick: () -> Unit ) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -112,17 +112,17 @@ fun ListItem(catatan: Catatan, onClick: () -> Unit ) {
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         Text(
-            text = catatan.judul,
+            text = mahasiswa.nama,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
             fontWeight = FontWeight.Bold
         )
         Text(
-            text = catatan.catatan,
+            text = mahasiswa.nim,
             maxLines = 2,
             overflow = TextOverflow.Ellipsis
         )
-        Text(text = catatan.tanggal)
+        Text(text = mahasiswa.kelas)
     }
 }
 
