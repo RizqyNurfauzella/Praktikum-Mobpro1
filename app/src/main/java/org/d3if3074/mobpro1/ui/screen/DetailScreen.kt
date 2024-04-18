@@ -57,7 +57,7 @@ fun DetailScreen() {
             )
         }
     ) { padding ->
-        FormCatatan(
+        FormMahasiswa(
             nama = nama,
             onNamaChange = { nama = it },
             nim = nim,
@@ -70,7 +70,7 @@ fun DetailScreen() {
 }
 
 @Composable
-fun FormCatatan(
+fun FormMahasiswa(
     nama: String, onNamaChange: (String) -> Unit,
     nim: String, onNimChange: (String) -> Unit,
     kelas: String, onKelasChange: (String) -> Unit,
