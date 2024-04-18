@@ -44,6 +44,7 @@ import androidx.navigation.compose.rememberNavController
 import org.d3if3074.mobpro1.R
 import org.d3if3074.mobpro1.ui.theme.Mobpro1Theme
 
+const val KEY_ID_CATATAN = "idCatatan"
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailScreen() {
