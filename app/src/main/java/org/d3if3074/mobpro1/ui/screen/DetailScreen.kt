@@ -1,6 +1,7 @@
 package org.d3if3074.mobpro1.ui.screen
 
 import android.content.res.Configuration
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -38,16 +39,15 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import org.d3if3074.mobpro1.R
 import org.d3if3074.mobpro1.ui.theme.Mobpro1Theme
 
-const val KEY_ID_CATATAN = "idCatatan"
+const val KEY_ID_MAHASISWA = "idMahasiswa"
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DetailScreen() {
+fun DetailScreen(navController: NavHostController,id: Long? = null) {
     var nama by remember { mutableStateOf("") }
     var nim by remember { mutableStateOf("") }
 
@@ -61,9 +61,10 @@ fun DetailScreen() {
     var selectedKelas by rememberSaveable { mutableStateOf(radioOptions[0]) }
 
     if (id != null) {
-        val data = viewModel.getCatatan(id)
-        judul = data.judul
-        catatan = data.catatan
+        val data = DetailViewModel().getMahasiswa(id)
+        nama = data.nama
+        nim = data.nim
+        selectedKelas = data.kelas
     }
 
     Scaffold(
@@ -79,7 +80,10 @@ fun DetailScreen() {
                     }
                 },
                 title = {
-                    Text(text = stringResource(id = R.string.tambah_mahasiswa))
+                    if (id == null)
+                        Text(text = stringResource(id = R.string.tambah_mahasiswa))
+                    else
+                        Text(text = stringResource(id = R.string.edit_mahasiswa))
                 },
                 colors = TopAppBarDefaults.mediumTopAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primaryContainer,
