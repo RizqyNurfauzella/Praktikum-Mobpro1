@@ -1,7 +1,6 @@
 package org.d3if3074.mobpro1.ui.screen
 
 import android.content.res.Configuration
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -39,6 +38,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import org.d3if3074.mobpro1.R
@@ -59,6 +59,12 @@ fun DetailScreen() {
         "D3IF-46-05"
     )
     var selectedKelas by rememberSaveable { mutableStateOf(radioOptions[0]) }
+
+    if (id != null) {
+        val data = viewModel.getCatatan(id)
+        judul = data.judul
+        catatan = data.catatan
+    }
 
     Scaffold(
         topBar   = {
