@@ -42,7 +42,15 @@ import org.d3if3074.mobpro1.ui.theme.Mobpro1Theme
 fun DetailScreen() {
     var nama by remember { mutableStateOf("") }
     var nim by remember { mutableStateOf("") }
-    var kelas by remember { mutableStateOf("") }
+
+    val radioOptions = listOf(
+        "D3IF-46-01",
+        "D3IF-46-02",
+        "D3IF-46-03",
+        "D3IF-46-04",
+        "D3IF-46-05"
+    )
+    var selectedKelas by rememberSaveable { mutableStateOf(radioOptions[0]) }
 
     Scaffold(
         topBar   = {
@@ -62,9 +70,10 @@ fun DetailScreen() {
             onNamaChange = { nama = it },
             nim = nim,
             onNimChange = { nim = it },
-            kelas = kelas,
-            onKelasChange = { nim = it },
-            modifier = Modifier.padding(padding)
+            selectedKelas = selectedKelas,
+            onKelasChange = { selectedKelas = it },
+            modifier = Modifier.padding(padding),
+            kelasOptions = radioOptions
         )
     }
 }
@@ -73,18 +82,10 @@ fun DetailScreen() {
 fun FormMahasiswa(
     nama: String, onNamaChange: (String) -> Unit,
     nim: String, onNimChange: (String) -> Unit,
-    kelas: String, onKelasChange: (String) -> Unit,
+    selectedKelas: String, onKelasChange: (String) -> Unit,
+    kelasOptions: List<String>,
     modifier: Modifier
 ) {
-    val radioOptions = listOf(
-        "D3IF-46-01",
-        "D3IF-46-02",
-        "D3IF-46-03",
-        "D3IF-46-04",
-        "D3IF-46-05"
-    )
-    var selectedKelas by rememberSaveable { mutableStateOf(radioOptions[0]) }
-
     Column(
         modifier = modifier.fillMaxSize().padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -112,14 +113,14 @@ fun FormMahasiswa(
         Column(
             modifier = Modifier.padding(top = 6.dp).border(1.dp, Color.Gray, RoundedCornerShape(4.dp))
         ) {
-            radioOptions.forEach {text ->
+            kelasOptions.forEach {text ->
                 KelasOption(
                     label = text,
                     isSelected = selectedKelas == text,
                     modifier = Modifier
                         .selectable(
                             selected = selectedKelas == text,
-                            onClick = { selectedKelas = text },
+                            onClick = { onKelasChange(text)},
                             role = Role.RadioButton
                         )
                         .padding(16.dp)
