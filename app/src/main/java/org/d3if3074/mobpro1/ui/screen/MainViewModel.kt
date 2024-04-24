@@ -1,20 +1,18 @@
 package org.d3if3074.mobpro1.ui.screen
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
+import org.d3if3074.mobpro1.database.MahasiswaDao
 import org.d3if3074.mobpro1.model.Mahasiswa
 
-class MainViewModel: ViewModel() {
+class MainViewModel(dao: MahasiswaDao) : ViewModel() {
 
-    val dataMahasiswa = listOf(
-        Mahasiswa(1, "Rizza Indah Mega Mandasari", "6706244601", "D3IF-46-01"),
-        Mahasiswa(2, "Indra Azimi", "6706244602", "D3IF-46-02"),
-        Mahasiswa(3, "Reza Budiawan", "6706244612", "D3IF-46-02"),
-        Mahasiswa(4, "Dwiko Indrawansyah", "6706244622", "D3IF-46-02"),
-        Mahasiswa(5, "Cahyana", "6706244603", "D3IF-46-03"),
-        Mahasiswa(6, "Indra Azemi", "6706244604", "D3IF-46-04"),
-        Mahasiswa(7, "Erna Hikmawati", "6706244605", "D3IF-46-05"),
-        Mahasiswa(8, "Rizqy Nurfauzella", "6706223074", "D3IF-46-04"),
-        Mahasiswa(9, "Ryan Gusman", "6706244637", "D3IF-46-04"),
-        Mahasiswa(10, "Muhammad Ihsan F", "6706244686", "D3IF-46-04"),
+    val data: StateFlow<List<Mahasiswa>> = dao.getMahasiswa().stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000L),
+        initialValue = emptyList()
     )
 }
