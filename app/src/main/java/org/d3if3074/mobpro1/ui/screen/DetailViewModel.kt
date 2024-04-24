@@ -26,12 +26,20 @@ class DetailViewModel(private val dao: CatatanDao) : ViewModel() {
         }
     }
 
-    fun getCatatan(id: Long): Catatan {
-        return Catatan(
-            id,
-            "Kuliah Mobpro $id Feb",
-            "Yey, hari ini belajar membuat aplikasi Android counter dan berhasil. Hehe.. Mudah2an modul selanjutnya juga lancar. Aamiin.",
-            "2024-02-$id 12:34:56"
+    suspend fun getCatatan(id: Long): Catatan? {
+        return dao.getCatatanById(id)
+    }
+
+    fun update(id: Long, judul: String, isi: String) {
+        val catatan = Catatan(
+            id      = id,
+            tanggal = formatter.format(Date()),
+            judul   = judul,
+            catatan = isi
         )
+
+        viewModelScope.launch(Dispatchers.IO) {
+            dao.update(catatan)
+        }
     }
 }

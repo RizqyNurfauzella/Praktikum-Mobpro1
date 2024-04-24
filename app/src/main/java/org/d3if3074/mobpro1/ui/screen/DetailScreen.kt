@@ -21,6 +21,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -52,8 +53,9 @@ fun DetailScreen(navController: NavHostController, id: Long? = null) {
     var judul by remember { mutableStateOf("") }
     var catatan by remember { mutableStateOf("") }
 
-    if (id != null) {
-        val data = viewModel.getCatatan(id)
+    LaunchedEffect(true) {
+        if (id == null) return@LaunchedEffect
+        val data = viewModel.getCatatan(id) ?: return@LaunchedEffect
         judul = data.judul
         catatan = data.catatan
     }
@@ -88,6 +90,8 @@ fun DetailScreen(navController: NavHostController, id: Long? = null) {
                         }
                         if (id == null) {
                             viewModel.insert(judul, catatan)
+                        } else {
+                            viewModel.update(id, judul, catatan)
                         }
                         navController.popBackStack() }) {
                         Icon(
