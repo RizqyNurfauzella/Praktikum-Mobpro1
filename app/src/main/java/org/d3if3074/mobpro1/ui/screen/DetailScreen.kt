@@ -93,12 +93,14 @@ fun DetailScreen(navController: NavHostController, id: Long? = null) {
                             Toast.makeText(context, R.string.invalid, Toast.LENGTH_LONG).show()
                             return@IconButton
                         }
+
                         if (id == null) {
                             viewModel.insert(judul, catatan)
                         } else {
                             viewModel.update(id, judul, catatan)
                         }
-                        navController.popBackStack() }) {
+                        navController.popBackStack()
+                    }) {
                         Icon(
                             imageVector = Icons.Outlined.Check,
                             contentDescription = stringResource(R.string.simpan),
