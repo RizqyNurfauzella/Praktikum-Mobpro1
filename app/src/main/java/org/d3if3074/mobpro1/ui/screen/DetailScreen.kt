@@ -74,6 +74,8 @@ fun DetailScreen(navController: NavHostController,id: Long? = null) {
     )
     var selectedKelas by rememberSaveable { mutableStateOf(radioOptions[0]) }
 
+    var showDialog by remember { mutableStateOf(false) }
+
     LaunchedEffect(true) {
         if (id == null) return@LaunchedEffect
         val data = viewModel.getMahasiswa(id) ?: return@LaunchedEffect
@@ -124,7 +126,11 @@ fun DetailScreen(navController: NavHostController,id: Long? = null) {
                         )
                     }
                     if (id != null) {
-                        DeleteAction {
+                        DeleteAction { showDialog = true }
+                        DisplayAlertDialog(
+                            openDialog = showDialog,
+                            onDismissRequest = { showDialog = false }) {
+                            showDialog = false
                             viewModel.delete(id)
                             navController.popBackStack()
                         }
