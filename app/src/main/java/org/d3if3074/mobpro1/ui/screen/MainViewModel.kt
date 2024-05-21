@@ -6,12 +6,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.d3if3074.mobpro1.model.Hewan
-import org.d3if3074.mobpro1.network.HewanApi
+import org.d3if3074.mobpro1.model.Sepatu
+import org.d3if3074.mobpro1.network.SepatuApi
 
 class MainViewModel : ViewModel() {
 
-    var data = mutableStateOf(emptyList<Hewan>())
+    var data = mutableStateOf(emptyList<Sepatu>())
         private set
 
     init {
@@ -21,7 +21,7 @@ class MainViewModel : ViewModel() {
     private fun retrieveData() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                data.value = HewanApi.service.getHewan()
+                data.value = SepatuApi.service.getSepatu()
             } catch (e: Exception) {
                 Log.d("MainViewModel", "Failure: ${e.message}")
             }

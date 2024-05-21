@@ -34,8 +34,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import org.d3if3074.mobpro1.R
-import org.d3if3074.mobpro1.model.Hewan
-import org.d3if3074.mobpro1.network.HewanApi
+import org.d3if3074.mobpro1.model.Sepatu
+import org.d3if3074.mobpro1.network.SepatuApi
 import org.d3if3074.mobpro1.ui.theme.Mobpro1Theme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -69,12 +69,12 @@ fun ScreenContent(modifier: Modifier) {
             .padding(4.dp),
         columns = GridCells.Fixed(2),
     ) {
-        items(data) { ListItem(hewan = it) }
+        items(data) { ListItem(sepatu = it) }
     }
 }
 
 @Composable
-fun ListItem(hewan: Hewan) {
+fun ListItem(sepatu: Sepatu) {
     Box(
         modifier = Modifier
             .padding(4.dp)
@@ -83,10 +83,10 @@ fun ListItem(hewan: Hewan) {
     ) {
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
-                .data(HewanApi.getHewanUrl(hewan.imageId))
+                .data(SepatuApi.getSepatuUrl(sepatu.imageId))
                 .crossfade(true)
                 .build(),
-            contentDescription = stringResource(R.string.gambar, hewan.nama),
+            contentDescription = stringResource(R.string.gambar, sepatu.merk),
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .fillMaxWidth()
@@ -100,12 +100,12 @@ fun ListItem(hewan: Hewan) {
                 .padding(4.dp)
         ) {
             Text(
-                text = hewan.nama,
+                text = sepatu.merk,
                 fontWeight = FontWeight.Bold,
                 color = Color.White
             )
             Text(
-                text = hewan.namaLatin,
+                text = sepatu.jenisSepatu,
                 fontStyle = FontStyle.Italic,
                 fontSize = 14.sp,
                 color = Color.White
