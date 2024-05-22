@@ -33,3 +33,4 @@ object SepatuApi {
         return "$BASE_URL$imageId.png"
     }
 }
+enum class ApiStatus { LOADING, SUCCESS, FAILED }
