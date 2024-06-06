@@ -36,6 +36,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -101,34 +102,34 @@ fun MainScreen() {
         if (bitmap != null) showHewanDialog = true
     }
 
-    Scaffold (
-      topBar = {
-          TopAppBar(
-              title = {
-                  Text(text = stringResource(id = R.string.app_name))
-              },
-              colors = TopAppBarDefaults.mediumTopAppBarColors(
-                  containerColor = MaterialTheme.colorScheme.primaryContainer,
-                  titleContentColor = MaterialTheme.colorScheme.primary
-              ),
-              actions = {
-                  IconButton(onClick = {
-                      if (user.email.isEmpty()) {
-                          CoroutineScope(Dispatchers.IO).launch { signIn(context, dataStore) }
-                      }
-                      else {
-                          showDialog = true
-                      }
-                  }) {
-                      Icon(
-                          painter = painterResource(R.drawable.account_circle_24),
-                          contentDescription = stringResource(R.string.profil),
-                          tint = MaterialTheme.colorScheme.primary
-                      )
-                  }
-              }
-          )
-      },
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(text = stringResource(id = R.string.app_name))
+                },
+                colors = TopAppBarDefaults.mediumTopAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    titleContentColor = MaterialTheme.colorScheme.primary,
+                ),
+                actions = {
+                    IconButton(onClick = {
+                        if (user.email.isEmpty()) {
+                            CoroutineScope(Dispatchers.IO).launch { signIn(context, dataStore) }
+                        }
+                        else {
+                            showDialog = true
+                        }
+                    }) {
+                        Icon(
+                            painter = painterResource(R.drawable.account_circle_24),
+                            contentDescription = stringResource(R.string.profil),
+                            tint = MaterialTheme.colorScheme.primary
+                        )
+                    }
+                }
+            )
+        },
         floatingActionButton = {
             FloatingActionButton(onClick = {
                 val options = CropImageContractOptions(
@@ -147,7 +148,8 @@ fun MainScreen() {
             }
         }
     ) { padding ->
-        ScreenContent(viewModel, Modifier.padding(padding))
+        ScreenContent(viewModel, user.email, Modifier.padding(padding))
+
         if (showDialog) {
             ProfilDialog(
                 user = user,
@@ -173,11 +175,14 @@ fun MainScreen() {
     }
 }
 
-
 @Composable
-fun ScreenContent(viewModel: MainViewModel, modifier: Modifier) {
+fun ScreenContent(viewModel: MainViewModel, userId: String, modifier: Modifier) {
     val data by viewModel.data
     val status by viewModel.status.collectAsState()
+
+    LaunchedEffect(userId) {
+        viewModel.retrieveData(userId)
+    }
 
     when (status) {
         ApiStatus.LOADING -> {
@@ -193,10 +198,12 @@ fun ScreenContent(viewModel: MainViewModel, modifier: Modifier) {
             LazyVerticalGrid(
                 modifier = modifier.fillMaxSize().padding(4.dp),
                 columns = GridCells.Fixed(2),
+                contentPadding = PaddingValues(bottom = 80.dp)
             ) {
                 items(data) { ListItem(hewan = it) }
             }
         }
+
         ApiStatus.FAILED -> {
             Column(
                 modifier = Modifier.fillMaxSize(),
@@ -205,7 +212,7 @@ fun ScreenContent(viewModel: MainViewModel, modifier: Modifier) {
             ) {
                 Text(text = stringResource(id = R.string.error))
                 Button(
-                    onClick = { viewModel.retrieveData() },
+                    onClick = { viewModel.retrieveData(userId) },
                     modifier = Modifier.padding(top = 16.dp),
                     contentPadding = PaddingValues(horizontal=32.dp, vertical=16.dp)
                 ) {
@@ -219,9 +226,7 @@ fun ScreenContent(viewModel: MainViewModel, modifier: Modifier) {
 @Composable
 fun ListItem(hewan: Hewan) {
     Box(
-        modifier = Modifier
-            .padding(4.dp)
-            .border(1.dp, Color.Gray),
+        modifier = Modifier.padding(4.dp).border(1.dp, Color.Gray),
         contentAlignment = Alignment.BottomCenter
     ) {
         AsyncImage(
@@ -233,14 +238,10 @@ fun ListItem(hewan: Hewan) {
             contentScale = ContentScale.Crop,
             placeholder = painterResource(id = R.drawable.loading_img),
             error = painterResource(id = R.drawable.broken_img),
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(4.dp)
+            modifier = Modifier.fillMaxWidth().padding(4.dp)
         )
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(4.dp)
+            modifier = Modifier.fillMaxWidth().padding(4.dp)
                 .background(Color(red = 0f, green = 0f, blue = 0f, alpha = 0.5f))
                 .padding(4.dp)
         ) {
@@ -331,7 +332,7 @@ private fun getCroppedImage(
 @Preview(showBackground = true)
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true)
 @Composable
-fun GreetingPreview() {
+fun ScreenPreview() {
     Mobpro1Theme {
         MainScreen()
     }

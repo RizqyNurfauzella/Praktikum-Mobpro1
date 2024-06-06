@@ -33,6 +33,7 @@ import org.d3if3074.mobpro1.R
 import org.d3if3074.mobpro1.model.User
 import org.d3if3074.mobpro1.ui.theme.Mobpro1Theme
 
+
 @Composable
 fun ProfilDialog(
     user: User,

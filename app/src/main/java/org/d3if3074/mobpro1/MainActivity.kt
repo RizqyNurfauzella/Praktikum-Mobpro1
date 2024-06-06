@@ -10,12 +10,12 @@ import androidx.compose.ui.Modifier
 import org.d3if3074.mobpro1.ui.screen.MainScreen
 import org.d3if3074.mobpro1.ui.theme.Mobpro1Theme
 
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             Mobpro1Theme {
-                // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
