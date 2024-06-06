@@ -73,6 +73,7 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-moshi:2.11.0")
     implementation("com.squareup.moshi:moshi-kotlin:1.15.1")
     implementation("io.coil-kt:coil-compose:2.6.0")
+    implementation("com.vanniktech:android-image-cropper:4.5.0")
 
     implementation("androidx.credentials:credentials:1.2.2")
     implementation("androidx.credentials:credentials-play-services-auth:1.2.2")
