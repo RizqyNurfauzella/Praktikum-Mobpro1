@@ -78,32 +78,32 @@ fun MainScreen() {
     var showDialog by remember { mutableStateOf(false) }
 
     Scaffold (
-      topBar = {
-          TopAppBar(
-              title = {
-                  Text(text = stringResource(id = R.string.app_name))
-              },
-              colors = TopAppBarDefaults.mediumTopAppBarColors(
-                  containerColor = MaterialTheme.colorScheme.primaryContainer,
-                  titleContentColor = MaterialTheme.colorScheme.primary
-              ),
-              actions = {
-                  IconButton(onClick = {
-                      if (user.email.isEmpty()) {
-                          CoroutineScope(Dispatchers.IO).launch { signIn(context, dataStore) }
-                      }
-                      else {
-                          showDialog = true
-                      }
-                  }) {
-                      Icon(
-                          painter = painterResource(R.drawable.account_circle_24),
-                          contentDescription = stringResource(R.string.profil),
-                          tint = MaterialTheme.colorScheme.primary
-                      )
-                  }
-              }
-          )
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(text = stringResource(id = R.string.app_name))
+                },
+                colors = TopAppBarDefaults.mediumTopAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    titleContentColor = MaterialTheme.colorScheme.primary
+                ),
+                actions = {
+                    IconButton(onClick = {
+                        if (user.email.isEmpty()) {
+                            CoroutineScope(Dispatchers.IO).launch { signIn(context, dataStore) }
+                        }
+                        else {
+                            showDialog = true
+                        }
+                    }) {
+                        Icon(
+                            painter = painterResource(R.drawable.account_circle_24),
+                            contentDescription = stringResource(R.string.profil),
+                            tint = MaterialTheme.colorScheme.primary
+                        )
+                    }
+                }
+            )
         }
     ) { padding ->
         ScreenContent(Modifier.padding(padding))
